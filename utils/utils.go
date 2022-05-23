@@ -1,16 +1,16 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
+	"translate/config"
 	"translate/query/status"
 	"translate/types"
 )
-
-const CLUSTER_ID = "rt-9d7a5d1b-ffe0-4d71-a982-190522cdf273"
 
 func HandleErr(e error) {
 	if e != nil {
@@ -28,10 +28,24 @@ func HandleGraphQLError (errors types.Errors) {
 func SaveToken(token string) error {
 	return ioutil.WriteFile(".token", []byte(token), 0666)
 }
+func SaveAuthInfo(token string, email string, id string) error {
+	authJson, err := json.Marshal(types.Auth{Token: token, Email: email, Id: id})
+	if (err != nil) {
+		return err
+	}
+	return ioutil.WriteFile("auth.json", []byte(authJson), 0666)
+}
+func GetAuthInfo() types.Auth {
+	bSlice, err := ioutil.ReadFile("auth.json")
+	HandleErr(err)
+	jsonData := types.Auth{}
+	json.Unmarshal(bSlice, &jsonData)
+	return jsonData
+}
 
 func GetClusterId(clusterId string) string {
 	if clusterId == "" {
-		return CLUSTER_ID
+		return config.CLUSTER_ID
 	}
 	return clusterId
 }

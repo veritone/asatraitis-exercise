@@ -32,3 +32,9 @@ Status command will display all job statuses or single job status if id is provi
 - `./translate status` or `go run . status` Displays all jobs with their statuses and tasks in a table format
 - `./translate status -id <jobId>` or `go run . status -d <jobId>` Displays a job and task status
 - `./translate status -id <jobId> -w` or `go run . status -d <jobId> -w` Wait for a job to be done before exiting
+## search
+Search for TDO by SDO title field
+### flags
+- `-v` Value used for fidning TDO by title field
+### Example
+- `./translate search -v testing` or `go run . search -v testing` Displays all jobs with their statuses and tasks in a table format
