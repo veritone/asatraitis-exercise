@@ -4,6 +4,19 @@ CLI tool written in go to create txt file translation jobs.
 # Commands
 ## login
 Running translate w/ login command will allow you to authenticate with dev environment and save token locally in `.token`
+### Flow
+```mermaid
+flowchart TD
+  A[Login] --> B{CLI has data registry already?};
+  B -- Yes --> C[Set auth info into auth.json]
+  B -- No --> W[Set auth info into auth.json]
+  W --> D[Create Data Registry and save id in app_data.json]
+  C --> Q[Done]  
+  D --> E[Create Schema and save id in app_data.json]
+  E --> F[Publish Schema and save id in app_data.json]
+  F --> G[Create Folder and save id in app_data.json]
+  G --> Q[Done]
+```
 ### flags
 - `-u` Username
 - `-p` Password
